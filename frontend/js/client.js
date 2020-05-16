@@ -35,16 +35,34 @@ const createModalContainer = () => {
 
 const setModal = card => {
     const cloneCard = card.cloneNode(true)
+    const styles = getComputedStyle(card)
+    const _ = parseFloat(styles.padding)
+
     cloneCard.style.background = 'rgba(0,0,60,.2)'
     cloneCard.style.position = 'absolute'
     
-    cloneCard.style.transform = 'translateX(50%)'
-
     modalContainer.appendChild(cloneCard)
-
+    
     const coords = card.getBoundingClientRect()
     
-    console.log(coords)
+    const translateX = coords.left-_*3.5
+    const translateY = coords.top-_*4
+    cloneCard.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`
+    
+    const centerView = { x: window.innerWidth/2, y: window.innerHeight/2 }
+    const centerCard = { x: coords.left + coords.width/2, y: coords.top + coords.height/2 }
+    
+    setTimeout(()=>{
+        console.log(centerView, centerCard)
+        cloneCard.style.width = 'auto'
+        cloneCard.style.height = 'auto'
+        cloneCard.style.transition = 'all 1s'
+        const newTranslateX = translateX + centerView.x-centerCard.x
+        const newTranslateY = translateY + centerView.y-centerCard.y
+        cloneCard.style.transform = `scale(2) translateX(${newTranslateX}px) translateY(${newTranslateY}px)`
+        // cloneCard.style.width = '50%'
+        // cloneCard.style.height = '50%'
+    }, 0)
 }
 
 const card = cardModal({ title: 'React' })

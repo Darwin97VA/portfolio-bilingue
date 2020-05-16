@@ -30,9 +30,6 @@ a:hover {
 
 
 
-.card-modal {
-    transition: all 1s;
-}
 .card {
     box-shadow: var(--shadow-medium);
     padding: .85em;
