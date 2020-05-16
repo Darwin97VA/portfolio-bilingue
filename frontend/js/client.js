@@ -4,43 +4,15 @@ const $ = (str, ...params) => {
 
     return all ? [...parent.querySelectorAll(str)] : parent.querySelector(str)
 }
-
-const openCardModal = e => {
-
-}
-
-const createModal = () => {
-    const element = document.createElement('div')
-    element.classList.add('modal-container')
-    return element
-}
-
-const cloneAndPosition = element => {
-    const clone = element.cloneNode(true)
-    clone.style.opacity = 0
-    clone.style.position = 'fixed'
-    // clone.style.top = 0 // `${coords.y}px`
-    // clone.style.left = 0 // `${coords.x}px`
-
-    const setShow = () => {
-        document.body.appendChild(clone)
-        clone.style.opacity = 1
-    }
-
-    return { clone, setShow }
-}
-
 const cardModal = ({ title, content, img }) => {
     const element = document.createElement('div')
-    element.classList.add('modal-card')
+    element.classList.add('modal-card', 'card')
 
     element.innerHTML = /* html */ `
-        <div class="card">
-            <img src="img/img1.jpg" alt="">
-            <h4>${title}</h4>
-            <div class="content">
+        <img src="img/img1.jpg" alt="">
+        <h4>${title}</h4>
+        <div class="content">
 
-            </div>
         </div>
     `
 
@@ -50,66 +22,33 @@ const cardModal = ({ title, content, img }) => {
 
     return element
 }
+const createModalContainer = () => {
+    const element = document.createElement('div')
+    element.style.position = 'fixed'
+    element.style.width = '100%'
+    element.style.height = '100vh'
+    element.style.top = 0
+    element.style.left = 0
+    element.style.background = 'rgba(0,0,0,.2)'
+    return element
+}
 
-
-
-
-
-const setModal = parent => {
-    const { clone, setShow } = cloneAndPosition(parent)
-    setShow()
-    setTimeout(()=>goToCenter(clone), 1000)
+const setModal = card => {
+    const cloneCard = card.cloneNode(true)
+    cloneCard.style.background = 'rgba(0,0,60,.2)'
+    cloneCard.style.position = 'absolute'
     
-    // centerConvention(clone)
-}
+    cloneCard.style.transform = 'translateX(50%)'
 
+    modalContainer.appendChild(cloneCard)
 
-const getCenterScreen = () => {
-    return {
-        x: screen.width/2,
-        y: screen.height/2
-    }
-}
-const getPosition = el => {
-    const coords = el.getBoundingClientRect()
-    return {
-        x: coords.x + coords.width/2,
-        y: coords.y + coords.height/2
-    }
-}
-const getLengthToCenter = el => {
-    const elSizes = getPosition(el)
-    const end = getCenterScreen()
-    return {
-        x: end.x - elSizes.x,
-        y: end.y - elSizes.y
-    }
-}
-const getLengthTransformToCenter = el => {
-    const elSizes = el.getBoundingClientRect()
-    const width = elSizes.width
-    const height = elSizes.height
+    const coords = card.getBoundingClientRect()
     
-    const { x, y } = getLengthToCenter(el)
-    const translateX = 100 * x / width
-    const translateY = 100 * y / height
-    console.log(x,y)
-    return {
-        x: translateX,
-        y: translateY
-    }
-}
-const goToCenter = el => {
-    const { x, y } = getLengthTransformToCenter(el)
-    el.style.transition = 'all 3s'
-    el.style.transform = `translateX(${x}%) translateY(${y}%)`
-}
-const centerConvention = el => {
-    el.style.top = '50%'
-    el.style.left = '50%'
-    el.style.transform = 'translateX(-50%) translateY(-50%)'
+    console.log(coords)
 }
 
 const card = cardModal({ title: 'React' })
+const modalContainer = createModalContainer()
+$('body').appendChild(modalContainer)
 $('#root').appendChild(card)
 setModal(card)

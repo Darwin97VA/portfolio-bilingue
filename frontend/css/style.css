@@ -37,6 +37,7 @@ a:hover {
     box-shadow: var(--shadow-medium);
     padding: .85em;
     text-align: center;
+    display: inline-block;
 }
 .card h4 {
     cursor: pointer;
