@@ -56,10 +56,11 @@ const setModal = card => {
         console.log(centerView, centerCard)
         cloneCard.style.width = 'auto'
         cloneCard.style.height = 'auto'
+        cloneCard.style.transformOrigin = 'center'
         cloneCard.style.transition = 'all 1s'
         const newTranslateX = translateX + centerView.x-centerCard.x
         const newTranslateY = translateY + centerView.y-centerCard.y
-        cloneCard.style.transform = `scale(2) translateX(${newTranslateX}px) translateY(${newTranslateY}px)`
+        cloneCard.style.transform = `scale(1) translateX(${newTranslateX}px) translateY(${newTranslateY}px)`
         // cloneCard.style.width = '50%'
         // cloneCard.style.height = '50%'
     }, 0)
@@ -67,6 +68,6 @@ const setModal = card => {
 
 const card = cardModal({ title: 'React' })
 const modalContainer = createModalContainer()
-$('body').appendChild(modalContainer)
+// $('body').appendChild(modalContainer)
 $('#root').appendChild(card)
-setModal(card)
+// setModal(card)
